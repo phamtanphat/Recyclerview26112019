@@ -1,6 +1,7 @@
 package com.example.recyclerview26112019;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class MonanAdapter extends RecyclerView.Adapter<MonanAdapter.MonanViewHolder>{
 
     private ArrayList<Monan> mArrayMonans;
+    private OnListener mOnListener;
 
     public MonanAdapter(ArrayList<Monan> mArrayMonans) {
         this.mArrayMonans = mArrayMonans;
@@ -32,7 +34,7 @@ public class MonanAdapter extends RecyclerView.Adapter<MonanAdapter.MonanViewHol
     public void onBindViewHolder(@NonNull MonanViewHolder holder, int position) {
         Monan monan = mArrayMonans.get(position);
         holder.mIvMonan.setImageResource(monan.getHinhanh());
-        holder.mTvGia.setText("$ "+monan.getGia());
+        holder.mTvGia.setText(monan.getGia()+"");
         holder.mTvTen.setText(monan.getTen());
         holder.mTvMota.setText(monan.getMota());
     }
@@ -53,6 +55,16 @@ public class MonanAdapter extends RecyclerView.Adapter<MonanAdapter.MonanViewHol
             mTvTen = itemView.findViewById(R.id.tvTenMonan);
             mTvGia = itemView.findViewById(R.id.tvGiaMonan);
             mTvMota = itemView.findViewById(R.id.tvMotaMonan);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnListener.onClick(getLayoutPosition());
+                }
+            });
         }
+    }
+    public void setonItemClick(OnListener onListener){
+        this.mOnListener = onListener;
     }
 }
